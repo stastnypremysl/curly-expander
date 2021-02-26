@@ -1,9 +1,13 @@
-cabal-version:       2.2
+cabal-version:       3.0
 
 name:                curly-expander
-version:             0.1.0.0
-synopsis: A library for curly braces (brackets) expanding - similar to bash curly expanding
+version:             0.1.0.1
+synopsis: Curly braces (brackets) expanding
+description: A library for curly braces (brackets) expanding - similar to bash curly expanding
+
+license:             GPL-3.0-or-later
 license-file:        LICENSE
+
 author:              Přemysl Šťastný
 maintainer:          premysl.stastny@hotmail.com
 category:            Text
@@ -40,3 +44,9 @@ test-suite nested-case-test
   import: tests
   main-is: NestedCaseTest.hs
   type: exitcode-stdio-1.0
+
+
+source-repository this
+    type: git
+    location: https://github.com/stastnypremysl/curly-expander
+    tag: 0.1.0.1
