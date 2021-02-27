@@ -5,7 +5,7 @@ version:             0.1.0.1
 synopsis: Curly braces (brackets) expanding
 description: A library for curly braces (brackets) expanding - similar to bash curly expanding
 
-license:             GPL-3.0-or-later
+license:             LGPL-3.0
 license-file:        LICENSE
 
 author:              Přemysl Šťastný
