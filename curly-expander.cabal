@@ -1,7 +1,7 @@
 cabal-version:       3.0
 
 name:                curly-expander
-version:             0.1.0.1
+version:             0.2.0.0
 synopsis: Curly braces (brackets) expanding
 description: A library for curly braces (brackets) expanding - similar to bash curly expanding
 
@@ -13,6 +13,7 @@ maintainer:          premysl.stastny@hotmail.com
 category:            Text
 build-type:          Simple
 extra-source-files:  CHANGELOG.md README.md
+homepage:            https://github.com/stastnypremysl/curly-expander
 
 common deps
   ghc-options: -Wall -Wextra
@@ -45,6 +46,9 @@ test-suite nested-case-test
   main-is: NestedCaseTest.hs
   type: exitcode-stdio-1.0
 
+source-repository head
+    type: git
+    location: https://github.com/stastnypremysl/curly-expander
 
 source-repository this
     type: git

@@ -9,9 +9,15 @@ This is the main module of the curly-expander package.
 
 -}
 
+{-# LANGUAGE OverloadedStrings #-}
+
 module Text.CurlyExpander (curlyExpand) where
 
 import qualified Data.Text as T
+import qualified Data.Text.Lazy as L
+
+import Data.Text.Lazy.Builder.Int (decimal)
+import Data.Text.Lazy.Builder (toLazyText)
 
 import Text.Parsec
 import Text.Parsec.Text
@@ -19,32 +25,32 @@ import Text.Parsec.Text
 import Data.Char
 
 
-cumulatorComma :: Parser [String]
+cumulatorComma :: Parser [L.Text]
 cumulatorComma = do
   atoms <- (try p_range) <|> (try p_char_range) <|> p_atoms
   return atoms 
   
   where
-    p_range :: Parser [String]
+    p_range :: Parser [L.Text]
     p_range = do
       nb1 <- many1 digit
       _ <- string ".."
       nb2 <- many1 digit
 
-      return$ map (show) $ get_range (read nb1) (read nb2)
+      return$ map (toLazyText . decimal) $ get_range (read nb1) (read nb2)
       where
         get_range :: Int -> Int -> [Int]
         get_range n1 n2
           | n1 > n2 = reverse$ get_range n2 n1
           | otherwise = [n1..n2]
 
-    p_char_range :: Parser [String]
+    p_char_range :: Parser [L.Text]
     p_char_range = do
       char1 <- anyChar
       _ <- string ".."
       char2 <- anyChar
       
-      return [[p] | p <- get_range char1 char2 ]
+      return [ L.pack [p] | p <- get_range char1 char2 ]
       where
         get_range :: Char -> Char -> [Char]
         get_range c1 c2
@@ -55,13 +61,13 @@ cumulatorComma = do
             n1 = ord c1
             n2 = ord c2
 
-    p_atoms :: Parser [String]
+    p_atoms :: Parser [L.Text]
     p_atoms = do
       molecule <- many1$ try p_atom
       terminal_atom <- innerInputP
       return $ (concat molecule) ++ terminal_atom
 
-    p_atom :: Parser [String]
+    p_atom :: Parser [L.Text]
     p_atom = do
 
       atom <- innerInputP
@@ -69,7 +75,7 @@ cumulatorComma = do
       return atom
 
 
-bracketP :: Parser [String]
+bracketP :: Parser [L.Text]
 bracketP = do
 
   _ <- char '{'
@@ -78,38 +84,38 @@ bracketP = do
 
   return$ ret
 
-charP :: Parser [String]
+charP :: Parser [L.Text]
 charP = do
   c <- anyChar
-  return [[c]]
+  return [L.pack [c]]
 
-nonSpecialCharP :: Parser [String]
+nonSpecialCharP :: Parser [L.Text]
 nonSpecialCharP = do
   c <- noneOf ",}"
-  return [[c]]
+  return [L.pack [c]]
 
-innerNonEmptyInputP :: Parser [String]
+innerNonEmptyInputP :: Parser [L.Text]
 innerNonEmptyInputP = do
   molecule <- (try bracketP <|> nonSpecialCharP)
   rest <- innerInputP
 
-  return [ a ++ b | a <- molecule, b <- rest ]
+  return [ L.append a b | a <- molecule, b <- rest ]
 
-innerInputP :: Parser [String]
+innerInputP :: Parser [L.Text]
 innerInputP = (innerNonEmptyInputP <|> emptyInputP)
 
-nonEmptyInputP :: Parser [String]
+nonEmptyInputP :: Parser [L.Text]
 nonEmptyInputP = do
   molecule <- (try bracketP <|> charP)
   rest <- inputP
 
-  return [ a ++ b | a <- molecule, b <- rest ]
+  return [ L.append a b | a <- molecule, b <- rest ]
 
-emptyInputP :: Parser [String]
+emptyInputP :: Parser [L.Text]
 emptyInputP = do
   return [""]
 
-inputP :: Parser [String]
+inputP :: Parser [L.Text]
 inputP = (nonEmptyInputP <|> emptyInputP)
   
 
@@ -131,9 +137,9 @@ inputP = (nonEmptyInputP <|> emptyInputP)
 -- >>> curlyExpand "{car,bus}{A..C}"
 -- ["carA", "carB", "carC", "busA", "busB", "busC"]
 
-curlyExpand :: String -> [String]
+curlyExpand :: T.Text -> [T.Text]
 curlyExpand input =
-  case parse inputP "bracket expansion"$ T.pack input of
+  case parse inputP "bracket expansion"$ input of
     Left _ -> [input]
-    Right ret -> ret
+    Right ret -> map L.toStrict ret
 
