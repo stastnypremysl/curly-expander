@@ -53,4 +53,4 @@ source-repository head
 source-repository this
     type: git
     location: https://github.com/stastnypremysl/curly-expander
-    tag: 0.1.0.1
+    tag: 0.2.0.0
