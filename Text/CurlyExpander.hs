@@ -121,7 +121,7 @@ inputP = (nonEmptyInputP <|> emptyInputP)
 
 -- | Curly braces (brackets) expand function
 --
--- First argument is a string, which you want to expand. Second argument is a list of expanded strings.
+-- First argument is a `Data.Text`, which you want to expand. Second argument is a list of expanded `Data.Text`s.
 --
 -- There are given few usage examples:
 --
@@ -136,6 +136,8 @@ inputP = (nonEmptyInputP <|> emptyInputP)
 --
 -- >>> curlyExpand "{car,bus}{A..C}"
 -- ["carA", "carB", "carC", "busA", "busB", "busC"]
+--
+-- Be aware, that these examples will run only with `OverloadedStrings` language extension and proper `Data.Text` imports.
 
 curlyExpand :: T.Text -> [T.Text]
 curlyExpand input =
