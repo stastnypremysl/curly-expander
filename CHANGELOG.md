@@ -1,5 +1,8 @@
 # Revision history for curly-expander
 
+## 0.2.0.2
+* Improved cabal file
+
 ## 0.2.0.1
 * Improved documentation
 
