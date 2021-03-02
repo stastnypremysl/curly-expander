@@ -1,7 +1,7 @@
 {-|
 Module      : Text.CurlyExpander
-License     : GPL-3
-Maintainer  : p@stty.cz
+License     : LGPL-3
+Maintainer  : p-w@stty.cz
 Stability   : testing
 Portability : POSIX
 
