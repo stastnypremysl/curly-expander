@@ -1,7 +1,7 @@
 cabal-version:       3.0
 
 name:                curly-expander
-version:             0.2.0.2
+version:             0.2.0.3
 synopsis:            Curly braces (brackets) expanding
 description:         A library for curly braces (brackets) expanding - similar to bash curly expanding
 
@@ -54,4 +54,4 @@ source-repository head
 source-repository this
     type: git
     location: https://github.com/stastnypremysl/curly-expander
-    tag: 0.2.0.2
+    tag: 0.2.0.3
