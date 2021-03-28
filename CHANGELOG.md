@@ -1,5 +1,8 @@
 # Revision history for curly-expander
 
+## 0.3.0.0
+* Added customCurlyExpand function.
+
 ## 0.2.0.3
 * Improved README
 
