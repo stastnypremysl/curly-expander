@@ -1,5 +1,9 @@
 # Revision history for curly-expander
 
+## 0.3.0.2
+* Bumped up upper bounds and bumped down lower bounds of dependency constraints
+* Fixed broken build in Hackage
+
 ## 0.3.0.0
 * Added customCurlyExpand function.
 
