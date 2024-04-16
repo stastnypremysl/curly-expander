@@ -1,5 +1,8 @@
 # Revision history for curly-expander
 
+## 0.3.0.3
+* Bumped up curly-expander base package upper bound
+
 ## 0.3.0.2
 * Bumped up upper bounds and bumped down lower bounds of dependency constraints
 * Fixed broken build in Hackage
