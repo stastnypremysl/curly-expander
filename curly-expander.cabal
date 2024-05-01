@@ -24,7 +24,7 @@ common deps
   build-depends:   
     base >= 4.14 && <4.20,
     parsec ^>= 3.1,
-    text ^>= 1.2
+    text >= 1.2 && <2.2
 
 common tests
   import: deps
