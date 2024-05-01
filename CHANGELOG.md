@@ -1,4 +1,6 @@
 # Revision history for curly-expander
+## 0.3.0.4
+* Text package upper bound changed to 2.2
 
 ## 0.3.0.3
 * Bumped up curly-expander base package upper bound
